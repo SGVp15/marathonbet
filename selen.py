@@ -4,7 +4,6 @@ from selenium import webdriver
 from selenium.common import NoSuchElementException, ElementClickInterceptedException, StaleElementReferenceException
 from selenium.webdriver.common.by import By
 from selenium_stealth import stealth
-
 from links import links
 
 options = webdriver.ChromeOptions()
@@ -24,7 +23,8 @@ stealth(driver,
         fix_hairline=True,
         )
 web_error = (NoSuchElementException, ElementClickInterceptedException, StaleElementReferenceException)
-www_name = 1
+www_name = 0
+
 for url in links:
     www_name += 1
     driver.get(url=url)
@@ -32,13 +32,23 @@ for url in links:
         try:
             button.click()
             sleep(2)
-            buttons_all = driver.find_element(By.XPATH, '//tr[@data-coupone-depended-row="NONE"]/td')
-            buttons_all[1].click()
-            sleep(2)
+            # driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
+            sleep(1)
             button.click()
+            driver.execute_script("window.scrollBy(0, 1_000_000)")
+            sleep(1)
+
+        # (1.5)
+        # MATCH_TOTAL_FIRST_TEAM_
+        # MATCH_TOTAL_SECOND_TEAM_
+
+        # Голы (нет 2 первых)
+        # data-preference-id="GOALS_93367529"
+
         except Exception as e:
             sleep(1)
             print(e)
+        driver.execute_script("window.scrollTo(0, document.body.scrollHeight)")
 
     print(www_name)
     s = driver.page_source
