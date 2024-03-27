@@ -1,54 +1,65 @@
+import os
 from time import sleep
+
 from selenium import webdriver
 from selenium.common import NoSuchElementException, ElementClickInterceptedException, StaleElementReferenceException
+from selenium.webdriver import ActionChains
+from selenium.webdriver.common.actions.wheel_input import ScrollOrigin
 from selenium.webdriver.common.by import By
 from selenium_stealth import stealth
-from links import links
-from parser import get_bs
 
-options = webdriver.ChromeOptions()
-options.add_argument("start-maximized")
+from config import dir_html
 
-# options.add_argument("--headless")
-options.add_argument("--disable-notifications")
-options.add_experimental_option("excludeSwitches", ["enable-automation"])
-options.add_experimental_option('useAutomationExtension', False)
-driver = webdriver.Chrome(options=options)
-stealth(driver,
-        languages=["ru-RU", "ru"],
-        vendor="Google Inc.",
-        platform="Win32",
-        webgl_vendor="Intel Inc.",
-        renderer="Intel Iris OpenGL Engine",
-        fix_hairline=True,
-        )
-web_error = (NoSuchElementException, ElementClickInterceptedException, StaleElementReferenceException)
-www_name = 0
 
-for url in links:
-    www_name += 1
-    driver.get(url=url)
-    for i, button in enumerate(driver.find_elements(By.XPATH, '//td[@class="member-area-button"]/div/span')):
-        sleep(1)
+class WebDriver():
+    web_error = (NoSuchElementException, ElementClickInterceptedException, StaleElementReferenceException)
 
-        s121 = driver.find_elements(By.XPATH, '//td[@class="member-area-button"]/div/span')[0]
+    def __init__(self):
+        options = webdriver.ChromeOptions()
+        options.add_argument("start-maximized")
 
-        try:
-            button.click()
-            sleep(2)
-            # get_bs(driver.page_source)
-            sleep(1)
-            if i == 2:
-                print(www_name)
-                s = driver.page_source
-                with open(f'./{www_name}.html', 'w', encoding='utf-8') as f:
-                    f.write(s)
+        # options.add_argument("--headless")
+        options.add_argument("--disable-notifications")
+        options.add_experimental_option("excludeSwitches", ["enable-automation"])
+        options.add_experimental_option('useAutomationExtension', False)
+        self.driver = webdriver.Chrome(options=options)
+        stealth(self.driver,
+                languages=["ru-RU", "ru"],
+                vendor="Google Inc.",
+                platform="Win32",
+                webgl_vendor="Intel Inc.",
+                renderer="Intel Iris OpenGL Engine",
+                fix_hairline=True,
+                )
 
-            button.click()
+    def run_scalp(self, url):
+        country = url.split('/')[6]
+        championship = url.split('/')[7]
+        os.makedirs(f'./{dir_html}/{country}/{championship}', exist_ok=True)
 
-        except Exception as e:
-            sleep(1)
-            print(e)
+        self.driver.get(url=url)
+        count_buttons = len(self.driver.find_elements(By.XPATH, '//td[@class="member-area-button"]/div/span'))
+        for i in range(count_buttons):
+            button = self.driver.find_elements(By.XPATH, '//td[@class="member-area-button"]/div/span')[i]
 
-driver.close()
-driver.quit()
+            scroll_origin = ScrollOrigin.from_viewport(1000, 500)
+            ActionChains(self.driver) \
+                .scroll_from_origin(scroll_origin, 0, 46) \
+                .perform()
+
+            try:
+                button.click()
+                sleep(1)
+
+                with open(f'./{dir_html}/{country}/{championship}/{i}.html', mode='w', encoding='utf-8') as f:
+                    f.write(self.driver.page_source)
+
+                button.click()
+
+            except Exception as e:
+                sleep(1)
+                print(e)
+
+    def close(self):
+        self.driver.close()
+        self.driver.quit()
