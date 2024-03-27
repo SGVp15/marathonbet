@@ -1,11 +1,11 @@
-import os
+import re
 
 from bs4 import BeautifulSoup
-import re
 
 
 def parsing_html(html):
-    soup = BeautifulSoup(html, 'html.parser')
+    # soup = BeautifulSoup(html, 'html.parser')
+    soup = BeautifulSoup(html, 'lxml')
     # print(soup.prettify())
 
     # Ищем div с текстом "Все выборы" и забираем "RootBlock"
@@ -25,19 +25,19 @@ def parsing_html(html):
     # print(table_title.prettify())
     command_first_name = table_title.find_all('td', {'class': "name"})[0].find('span').text
     command_second_name = table_title.find_all('td', {'class': "name"})[1].find('span').text
-    print(f'{command_first_name = }')
-    print(f'{command_second_name = }')
+    # print(f'{command_first_name = }')
+    # print(f'{command_second_name = }')
 
     value_1_col_tag = table_title.find(
         'td', {"class": "price height-column-with-price first-in-main-row coupone-width-1"}
     )
 
-    value_1_col = value_1_col_tag.find('span').text
-    print(f"{value_1_col = }")
+    value_1_col = float(value_1_col_tag.find('span').text)
+    # print(f"{value_1_col = }")
 
     value_2_col_tag = value_1_col_tag.find_next_siblings()[1]
-    value_2_col = value_2_col_tag.find('span').text
-    print(f"{value_2_col = }")
+    value_2_col = float(value_2_col_tag.find('span').text)
+    # print(f"{value_2_col = }")
     # (1.5)
     # MATCH_TOTAL_FIRST_TEAM_
     # MATCH_TOTAL_SECOND_TEAM_
@@ -49,26 +49,26 @@ def parsing_html(html):
     )
 
     try:
-        match_total_first_team_value = float(
+        match_total_first_team_1p5_value = float(
             match_total_first_team_tag.find_all('', string=re.compile(r'\s+\(1.5\)\s+'))[1]
             .find_parent()
             .find_next_sibling().text
         )
     except IndexError:
-        match_total_first_team_value = ''
+        match_total_first_team_1p5_value = ''
 
-    print(f'{match_total_first_team_value = }')
+    # print(f'{match_total_first_team_value = }')
 
     try:
-        match_total_second_team_value = float(
+        match_total_second_team_1p5_value = float(
             match_total_second_team_tag.find_all('', string=re.compile(r'\s+\(1.5\)\s+'))[1]
             .find_parent()
             .find_next_sibling().text
         )
     except IndexError:
-        match_total_second_team_value = ''
+        match_total_second_team_1p5_value = ''
 
-    print(f'{match_total_second_team_value = }')
+    # print(f'{match_total_second_team_value = }')
 
     # Голы (нет 2 первых)
     # //div[@data-preference-id="GOALS_93367529"]
@@ -77,15 +77,24 @@ def parsing_html(html):
         .find('table', {"class": "td-border"})
         .find_all('td')
     )
+    player_1 = goals[0].text.strip()
+    player_2 = goals[3].text.strip()
+
+    player_1 = re.sub('забьет', '', player_1).strip()
+    player_2 = re.sub('забьет', '', player_2).strip()
+    # Меняем местами 1 и 2 игрока
     goals_dict = {
-        goals[0].text: goals[2].text.strip(),
-        goals[3].text: goals[5].text.strip(),
+        player_1: float(goals[5].text.strip()),
+        player_2: float(goals[2].text.strip()),
     }
-    print(goals_dict)
+    # print(goals_dict)
 
-
-if __name__ == '__main__':
-    for file in os.listdir('./data'):
-        print(file)
-        with open(f'./data/{file}', mode='r', encoding='utf-8') as f:
-            parsing_html(f.read())
+    return (
+        command_first_name,
+        command_second_name,
+        value_1_col,
+        value_2_col,
+        match_total_first_team_1p5_value,
+        match_total_second_team_1p5_value,
+        goals_dict
+    )

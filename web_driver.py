@@ -58,7 +58,7 @@ class WebDriver():
 
             except Exception as e:
                 sleep(1)
-                print(e)
+                print(f'[Error] i \n {e}')
 
     def close(self):
         self.driver.close()
