@@ -8,7 +8,8 @@ class Match:
                  value_2_col: float = 0.0,
                  match_total_first_team_1p5_value: float = 0.0,
                  match_total_second_team_1p5_value: float = 0.0,
-                 goals_dict: dict = {}
+                 goals_dict: dict = {},
+                 date: str = '',
                  ):
         self.country: str = country
         self.championship: str = championship
@@ -19,3 +20,4 @@ class Match:
         self.match_total_first_team_1p5_value: float = match_total_first_team_1p5_value
         self.match_total_second_team_1p5_value: float = match_total_second_team_1p5_value
         self.goals_dict: dict = goals_dict
+        self.date: str = date

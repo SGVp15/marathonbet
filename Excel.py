@@ -30,7 +30,7 @@ def add_to_excel_file(matchs: [Match]):
             # ID	League	Нome Team	Guest Team	Koef	Type	Date	SorareFilter
             values_to_write = [
                 '',
-                m.country,
+                f'{m.country} {m.championship}',
                 m.command_first_name,
                 m.command_second_name,
                 val,
