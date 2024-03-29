@@ -4,7 +4,6 @@ from bs4 import BeautifulSoup
 
 
 def parsing_html(html):
-    # soup = BeautifulSoup(html, 'html.parser')
     soup = BeautifulSoup(html, 'lxml')
     # print(soup.prettify())
 

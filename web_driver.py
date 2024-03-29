@@ -1,4 +1,5 @@
 import os
+import random
 from time import sleep
 
 from selenium import webdriver
@@ -49,7 +50,7 @@ class WebDriver():
 
             try:
                 button.click()
-                sleep(1)
+                sleep(random.randrange(1, 3))
 
                 with open(f'./{dir_html}/{country}/{championship}/{i}.html', mode='w', encoding='utf-8') as f:
                     f.write(self.driver.page_source)
