@@ -1,5 +1,6 @@
 import os
 import random
+import time
 from time import sleep
 
 from selenium import webdriver
@@ -39,6 +40,7 @@ class WebDriver():
         os.makedirs(f'./{dir_html}/{country}/{championship}', exist_ok=True)
 
         self.driver.get(url=url)
+        sleep(0.5)
         count_buttons = len(self.driver.find_elements(By.XPATH, '//td[@class="member-area-button"]/div/span'))
         for i in range(count_buttons):
             button = self.driver.find_elements(By.XPATH, '//td[@class="member-area-button"]/div/span')[i]
@@ -50,16 +52,16 @@ class WebDriver():
 
             try:
                 button.click()
-                sleep(random.randrange(1, 3))
+                sleep(3)
 
                 with open(f'./{dir_html}/{country}/{championship}/{i}.html', mode='w', encoding='utf-8') as f:
                     f.write(self.driver.page_source)
 
                 button.click()
-
             except Exception as e:
-                sleep(1)
                 print(f'[Error] i \n {e}')
+            finally:
+                sleep(1)
 
     def close(self):
         self.driver.close()

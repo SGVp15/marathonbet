@@ -31,11 +31,11 @@ def parsing_html(html):
         'td', {"class": "price height-column-with-price first-in-main-row coupone-width-1"}
     )
 
-    value_1_col = float(value_1_col_tag.find('span').text)
+    value_1_col = str(value_1_col_tag.find('span').text).strip().replace('.',',')
     # print(f"{value_1_col = }")
 
     value_2_col_tag = value_1_col_tag.find_next_siblings()[1]
-    value_2_col = float(value_2_col_tag.find('span').text)
+    value_2_col = str(value_2_col_tag.find('span').text).strip().replace('.',',')
     # print(f"{value_2_col = }")
     # (1.5)
     # MATCH_TOTAL_FIRST_TEAM_
@@ -48,22 +48,22 @@ def parsing_html(html):
     )
 
     try:
-        match_total_first_team_1p5_value = float(
+        match_total_first_team_1p5_value = str(
             match_total_first_team_tag.find_all('', string=re.compile(r'\s+\(1.5\)\s+'))[1]
             .find_parent()
             .find_next_sibling().text
-        )
+        ).strip().replace('.',',')
     except IndexError:
         match_total_first_team_1p5_value = ''
 
     # print(f'{match_total_first_team_value = }')
 
     try:
-        match_total_second_team_1p5_value = float(
+        match_total_second_team_1p5_value = str(
             match_total_second_team_tag.find_all('', string=re.compile(r'\s+\(1.5\)\s+'))[1]
             .find_parent()
             .find_next_sibling().text
-        )
+        ).strip().replace('.',',')
     except IndexError:
         match_total_second_team_1p5_value = ''
 
@@ -83,8 +83,8 @@ def parsing_html(html):
     player_2 = re.sub('забьет', '', player_2).strip()
     # Меняем местами 1 и 2 игрока
     goals_dict = {
-        player_1: float(goals[5].text.strip()),
-        player_2: float(goals[2].text.strip()),
+        player_1: str(goals[5].text.strip().replace('.',',')),
+        player_2: str(goals[2].text.strip().replace('.',',')),
     }
     # print(goals_dict)
 

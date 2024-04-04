@@ -28,14 +28,19 @@ def add_to_excel_file(matchs: [Match]):
                 m.match_total_second_team_1p5_value
         ):
             # ID	League	Нome Team	Guest Team	Koef	Type	Date	SorareFilter
+            _type =''
+            if val.__name__ == m.match_total_first_team_1p5_value:
+                _type = 'Клиншит'
+            # elif val.__name__ == m.match_total_first_team_1p5_value
+            #     :
             values_to_write = [
                 '',
                 f'{m.country} {m.championship}',
                 m.command_first_name,
                 m.command_second_name,
                 val,
-                # _type,
-                # _date
+                _type,
+                m.date
             ]
             # Write the numbers to the worksheet
             for i, v in enumerate(values_to_write):
