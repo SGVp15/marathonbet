@@ -68,5 +68,5 @@ def create_excel():
 
 if __name__ == '__main__':
     # download_page_on_links()
-    parsing_all()
-    # create_excel()
+    # parsing_all()
+    create_excel()
