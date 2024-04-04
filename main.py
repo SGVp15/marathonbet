@@ -32,6 +32,7 @@ def parsing_all() -> [Match]:
 
                 path = os.path.join('.', root, file)
                 with (open(path, encoding='utf-8', mode='r') as f):
+
                     (
                         command_first_name, command_second_name, value_1_col, value_2_col,
                         match_total_first_team_1p5_value,
@@ -67,6 +68,6 @@ def create_excel():
 
 
 if __name__ == '__main__':
-    download_page_on_links()
-    # parsing_all()
+    # download_page_on_links()
+    parsing_all()
     # create_excel()

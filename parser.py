@@ -22,8 +22,12 @@ def parsing_html(html):
         .find('table', {'class': "coupon-row-item"})
     )
     # print(table_title.prettify())
-    command_first_name = table_title.find_all('td', {'class': "name"})[0].find('span').text
-    command_second_name = table_title.find_all('td', {'class': "name"})[1].find('span').text
+    try:
+        command_first_name = table_title.find_all('td', {'class': "name"})[0].find('span').text
+        command_second_name = table_title.find_all('td', {'class': "name"})[1].find('span').text
+    except IndexError:
+        print('Error command_first_name')
+        return
     # print(f'{command_first_name = }')
     # print(f'{command_second_name = }')
 
