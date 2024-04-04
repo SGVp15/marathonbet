@@ -21,13 +21,13 @@ def add_to_excel_file(matchs: [Match]):
         # m.match_total_first_team_1p5_value
         # m.match_total_second_team_1p5_value
         # m.goals_dict
-        _types = ['', '', 'ИТБ', 'ИТБ']
-        for num_type, val in enumerate[
+        _types = ['1', '2', 'ИТБ', 'ИТБ']
+        for num_type, val in enumerate([
             m.value_1_col,
             m.value_2_col,
             m.match_total_first_team_1p5_value,
             m.match_total_second_team_1p5_value
-        ]:
+        ]):
             row += 1
             # ID	League	Нome Team	Guest Team	Koef	Type	Date	SorareFilter
             values_to_write = [
