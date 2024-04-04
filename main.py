@@ -32,13 +32,12 @@ def parsing_all() -> [Match]:
 
                 path = os.path.join('.', root, file)
                 with (open(path, encoding='utf-8', mode='r') as f):
-
-                    (
-                        command_first_name, command_second_name, value_1_col, value_2_col,
-                        match_total_first_team_1p5_value,
-                        match_total_second_team_1p5_value, goals_dict) = parsing_html(
-                        f.read())
                     try:
+                        (command_first_name, command_second_name, value_1_col, value_2_col,
+                         match_total_first_team_1p5_value,
+                         match_total_second_team_1p5_value, goals_dict) = parsing_html(
+                            f.read())
+
                         matches.append(Match(
                             country=country,
                             championship=championship,
@@ -50,7 +49,7 @@ def parsing_all() -> [Match]:
                             match_total_second_team_1p5_value=match_total_second_team_1p5_value,
                             goals_dict=goals_dict,
                             date=datetime.datetime.now().strftime('%Y.%m.%d')
-                            )
+                        )
                         )
                         print(f'[OK]\t{path}')
                     except Exception as e:
