@@ -34,7 +34,7 @@ class WebDriver():
                 fix_hairline=True,
                 )
 
-    def run_scalp(self, url):
+    def run_scraping(self, url):
         country = url.split('/')[6]
         championship = url.split('/')[7]
         os.makedirs(f'./{dir_html}/{country}/{championship}', exist_ok=True)

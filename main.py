@@ -15,7 +15,7 @@ def download_page_on_links():
     driver = WebDriver()
     for link in links:
         print(link)
-        driver.run_scalp(link)
+        driver.run_scraping(link)
     driver.close()
 
 
