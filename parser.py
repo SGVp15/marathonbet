@@ -1,7 +1,11 @@
+import datetime
+import os
+import pickle
 import re
 
 from bs4 import BeautifulSoup
 
+from config import dir_html
 from match import Match
 
 
@@ -103,3 +107,33 @@ def parsing_html(html):
         match_total_second_team_1p5_value=match_total_second_team_1p5_value,
         goals_dict=goals_dict
     )
+
+
+def parsing_all() -> [Match]:
+    matches = []
+    for root, dirs, files in os.walk(dir_html):
+
+        if files:
+            country = root.split('\\')[-2]
+            country = re.sub(r'[^\w]+', ' ', country).strip()
+            championship = root.split('\\')[-1]
+            championship = re.sub(r'[^\w]+', ' ', championship).strip()
+
+            for file in files:
+                path = os.path.join('.', root, file)
+                with (open(path, encoding='utf-8', mode='r') as f):
+                    try:
+                        match = parsing_html(f.read())
+
+                        match.country = country
+                        match.championship = championship
+                        match.date = datetime.datetime.now().strftime('%Y.%m.%d')
+
+                        matches.append(match)
+                        print(f'[OK]\t{path}')
+                    except Exception as e:
+                        print(f'[ERROR]\t{path}')
+
+    with open(f'./matches.pickle', 'wb') as handle:
+        pickle.dump(matches, handle, protocol=pickle.HIGHEST_PROTOCOL)
+    return matches

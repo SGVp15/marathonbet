@@ -1,3 +1,6 @@
+import pickle
+
+
 class Match:
     def __init__(self,
                  country: str = '',
@@ -76,3 +79,21 @@ class Match:
                 self.date]
             )
         return match_list
+
+
+def set_match_win():
+    with open(f'./matches.pickle', 'rb') as handle:
+        matches = pickle.load(handle)
+
+    for j in range(len(matches)):
+        match: Match = matches[j]
+        for i in range(j + 1, len(matches)):
+            match_2: Match = matches[i]
+            if match.country == match_2.country:
+                if match.championship == match_2.championship:
+                    if (match.command_first_name == match_2.command_first_name
+                            or match.command_second_name == match_2.command_second_name):
+                        match_2.win_number += 1
+
+    with open(f'./matches.pickle', 'wb') as handle:
+        pickle.dump(matches, handle, protocol=pickle.HIGHEST_PROTOCOL)

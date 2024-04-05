@@ -11,6 +11,7 @@ from selenium.webdriver.common.by import By
 from selenium_stealth import stealth
 
 from config import dir_html
+from links import links
 
 
 class WebDriver():
@@ -66,3 +67,11 @@ class WebDriver():
     def close(self):
         self.driver.close()
         self.driver.quit()
+
+
+def download_page_on_links():
+    driver = WebDriver()
+    for link in links:
+        print(link)
+        driver.run_scraping(link)
+    driver.close()

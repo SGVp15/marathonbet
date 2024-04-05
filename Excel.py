@@ -1,3 +1,5 @@
+import pickle
+
 import openpyxl
 
 from config import excel_file
@@ -29,3 +31,9 @@ def add_to_excel_file(matchs: [Match]):
 
     # Save the workbook to a file
     workbook.save(excel_file)
+
+
+def create_excel():
+    with open(f'./matches.pickle', 'rb') as handle:
+        matches = pickle.load(handle)
+        add_to_excel_file(matches)
