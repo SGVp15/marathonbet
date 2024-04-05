@@ -87,6 +87,6 @@ def set_match_win():
 
 if __name__ == '__main__':
     # download_page_on_links()
-    # parsing_all()
+    parsing_all()
     set_match_win()
     create_excel()
