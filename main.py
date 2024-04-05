@@ -28,8 +28,8 @@ def parsing_all() -> [Match]:
             country = re.sub(r'[^\w]+', ' ', country).strip()
             championship = root.split('\\')[-1]
             championship = re.sub(r'[^\w]+', ' ', championship).strip()
-            for file in files:
 
+            for file in files:
                 path = os.path.join('.', root, file)
                 with (open(path, encoding='utf-8', mode='r') as f):
                     try:
@@ -38,7 +38,7 @@ def parsing_all() -> [Match]:
                          match_total_second_team_1p5_value, goals_dict) = parsing_html(
                             f.read())
 
-                        matches.append(Match(
+                        match = Match(
                             country=country,
                             championship=championship,
                             command_first_name=command_first_name,
@@ -50,7 +50,8 @@ def parsing_all() -> [Match]:
                             goals_dict=goals_dict,
                             date=datetime.datetime.now().strftime('%Y.%m.%d')
                         )
-                        )
+
+                        matches.append(match)
                         print(f'[OK]\t{path}')
                     except Exception as e:
                         print(f'[ERROR]\t{path}')
@@ -68,5 +69,5 @@ def create_excel():
 
 if __name__ == '__main__':
     # download_page_on_links()
-    # parsing_all()
+    parsing_all()
     create_excel()

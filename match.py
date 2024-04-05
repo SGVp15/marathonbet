@@ -21,6 +21,7 @@ class Match:
         self.match_total_second_team_1p5_value: str = match_total_second_team_1p5_value
         self.goals_dict: dict = goals_dict
         self.date: str = date
+        self.win_number = ''
 
     def get_match_for_excel(self):
         match_list = []
@@ -35,7 +36,7 @@ class Match:
             self.command_first_name,
             self.command_second_name,
             self.value_1_col,
-            '1',
+            f'win{self.win_number}',
             self.date]
         )
 
@@ -44,7 +45,7 @@ class Match:
             self.command_second_name,
             self.command_first_name,
             self.value_2_col,
-            '2',
+            f'win{self.win_number}',
             self.date]
         )
 
