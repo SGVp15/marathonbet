@@ -34,23 +34,11 @@ def parsing_all() -> [Match]:
                 path = os.path.join('.', root, file)
                 with (open(path, encoding='utf-8', mode='r') as f):
                     try:
-                        (command_first_name, command_second_name, value_1_col, value_2_col,
-                         match_total_first_team_1p5_value,
-                         match_total_second_team_1p5_value, goals_dict) = parsing_html(
-                            f.read())
+                        match = parsing_html(f.read())
 
-                        match = Match(
-                            country=country,
-                            championship=championship,
-                            command_first_name=command_first_name,
-                            command_second_name=command_second_name,
-                            value_1_col=value_1_col,
-                            value_2_col=value_2_col,
-                            match_total_first_team_1p5_value=match_total_first_team_1p5_value,
-                            match_total_second_team_1p5_value=match_total_second_team_1p5_value,
-                            goals_dict=goals_dict,
-                            date=datetime.datetime.now().strftime('%Y.%m.%d')
-                        )
+                        match.country = country
+                        match.championship = championship
+                        match.date = datetime.datetime.now().strftime('%Y.%m.%d')
 
                         matches.append(match)
                         print(f'[OK]\t{path}')
