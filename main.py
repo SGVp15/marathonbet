@@ -80,7 +80,7 @@ def set_match_win():
                 if match.championship == match_2.championship:
                     if (match.command_first_name == match_2.command_first_name
                             or match.command_second_name == match_2.command_second_name):
-                        match.win_number = 2
+                        match_2.win_number += 1
 
     with open(f'./matches.pickle', 'wb') as handle:
         pickle.dump(matches, handle, protocol=pickle.HIGHEST_PROTOCOL)
