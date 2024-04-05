@@ -54,7 +54,7 @@ class WebDriver():
                 button.click()
                 sleep(3)
 
-                with open(f'./{dir_html}/{country}/{championship}/{i}.html', mode='w', encoding='utf-8') as f:
+                with open(f'./{dir_html}/{country}/{championship}/{i:03}.html', mode='w', encoding='utf-8') as f:
                     f.write(self.driver.page_source)
 
                 button.click()

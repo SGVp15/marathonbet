@@ -21,3 +21,57 @@ class Match:
         self.match_total_second_team_1p5_value: str = match_total_second_team_1p5_value
         self.goals_dict: dict = goals_dict
         self.date: str = date
+
+    def get_match_for_excel(self):
+        match_list = []
+
+        # self.value_1_col
+        # self.value_2_col
+        # self.match_total_first_team_1p5_value
+        # self.match_total_second_team_1p5_value
+
+        match_list.append([
+            '', f'{self.country} {self.championship}',
+            self.command_first_name,
+            self.command_second_name,
+            self.value_1_col,
+            '1',
+            self.date]
+        )
+
+        match_list.append([
+            '', f'{self.country} {self.championship}',
+            self.command_second_name,
+            self.command_first_name,
+            self.value_2_col,
+            '2',
+            self.date]
+        )
+
+        match_list.append([
+            '', f'{self.country} {self.championship}',
+            self.command_first_name,
+            self.command_second_name,
+            self.match_total_first_team_1p5_value,
+            'ИТБ',
+            self.date]
+        )
+
+        match_list.append([
+            '', f'{self.country} {self.championship}',
+            self.command_second_name,
+            self.command_first_name,
+            self.match_total_second_team_1p5_value,
+            'ИТБ',
+            self.date]
+        )
+        for k, val in self.goals_dict.items():
+            match_list.append([
+                '', f'{self.country} {self.championship}',
+                k,
+                '',
+                val,
+                'клиншит',
+                self.date]
+            )
+        return match_list
