@@ -21,7 +21,7 @@ class Match:
         self.match_total_second_team_1p5_value: str = match_total_second_team_1p5_value
         self.goals_dict: dict = goals_dict
         self.date: str = date
-        self.win_number = 0
+        self.win_number = 1
 
     def get_match_for_excel(self):
         match_list = []
