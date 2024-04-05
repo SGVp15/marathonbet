@@ -5,11 +5,11 @@ import re
 from Excel import add_to_excel_file
 from config import dir_html
 from parser import parsing_html
+from renaming import renaming_html
 from web_driver import WebDriver
 from links import links
 from match import Match
 import pickle
-import renaming
 
 
 def download_page_on_links():
@@ -88,6 +88,7 @@ def set_match_win():
 
 if __name__ == '__main__':
     # download_page_on_links()
+    renaming_html()
     parsing_all()
     set_match_win()
     create_excel()
