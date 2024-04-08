@@ -9,7 +9,7 @@ from config import dir_html
 from match import Match
 
 
-def parsing_html(html):
+def parsing_html(html) -> Match:
     soup = BeautifulSoup(html, 'lxml')
     # print(soup.prettify())
 

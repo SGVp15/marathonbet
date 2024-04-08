@@ -39,7 +39,7 @@ class Match:
             self.command_first_name,
             self.command_second_name,
             self.value_1_col,
-            f'win{self.win_number}',
+            f'win_{self.win_number}',
             self.date]
         )
 
@@ -48,7 +48,7 @@ class Match:
             self.command_second_name,
             self.command_first_name,
             self.value_2_col,
-            f'win{self.win_number}',
+            f'win_{self.win_number}',
             self.date]
         )
 
@@ -69,15 +69,22 @@ class Match:
             'ИТБ',
             self.date]
         )
-        for k, val in self.goals_dict.items():
+        goal_teams = list(self.goals_dict.keys())
+        goal = []
+        for goal_team in goal_teams:
+            goal.append(self.goals_dict.get(goal_team))
+        reverse_goal_teams = goal_teams[::-1]
+
+        for i in range(len(goal_teams)):
             match_list.append([
                 '', f'{self.country} {self.championship}',
-                k,
-                '',
-                val,
+                goal_teams[i],
+                reverse_goal_teams[i],
+                goal[i],
                 'клиншит',
                 self.date]
             )
+
         return match_list
 
 

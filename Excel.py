@@ -6,14 +6,14 @@ from config import excel_file
 from match import Match
 
 
-def add_to_excel_file(matchs: [Match]):
+def add_to_excel_file(matches: [Match]):
     workbook = openpyxl.load_workbook(excel_file)
     worksheet = workbook.active
 
     row = worksheet.max_row
     row = 1
     # Create a list of values to write to the Excel file
-    for m in matchs:
+    for m in matches:
         # m.country
         # m.championship
         # m.command_first_name
