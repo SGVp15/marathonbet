@@ -1,5 +1,7 @@
 import os
 
+DOWNLOAD_SITES = False  # Скачивать сайты
+
 dir_html = 'data'
 excel_file = './Кефы.xlsx'
 

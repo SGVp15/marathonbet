@@ -1,11 +1,13 @@
 from Excel import create_excel
+from config import DOWNLOAD_SITES
 from parser import parsing_all
 from match import set_match_win
 from renaming import renaming_html
 from web_driver import download_page_on_links
 
 if __name__ == '__main__':
-    download_page_on_links()
+    if DOWNLOAD_SITES:
+        download_page_on_links()
     renaming_html()
     parsing_all()
     set_match_win()
