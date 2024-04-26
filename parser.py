@@ -5,7 +5,7 @@ import re
 
 from bs4 import BeautifulSoup
 
-from config import dir_html
+from config import dir_html, matches_pickle
 from match import Match
 
 
@@ -134,6 +134,6 @@ def parsing_all() -> [Match]:
                     except Exception as e:
                         print(f'[ERROR]\t{path}')
 
-    with open(f'./matches.pickle', 'wb') as handle:
+    with open(matches_pickle, 'wb') as handle:
         pickle.dump(matches, handle, protocol=pickle.HIGHEST_PROTOCOL)
     return matches

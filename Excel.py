@@ -2,7 +2,7 @@ import pickle
 
 import openpyxl
 
-from config import excel_file
+from config import excel_file, matches_pickle
 from match import Match
 
 
@@ -34,6 +34,6 @@ def add_to_excel_file(matches: [Match]):
 
 
 def create_excel():
-    with open(f'./matches.pickle', 'rb') as handle:
+    with open(matches_pickle, 'rb') as handle:
         matches = pickle.load(handle)
         add_to_excel_file(matches)

@@ -1,5 +1,7 @@
 import pickle
 
+from config import matches_pickle
+
 
 class Match:
     def __init__(self,
@@ -89,7 +91,7 @@ class Match:
 
 
 def set_match_win():
-    with open(f'./matches.pickle', 'rb') as handle:
+    with open(matches_pickle, 'rb') as handle:
         matches = pickle.load(handle)
 
     for j in range(len(matches)):
@@ -102,5 +104,5 @@ def set_match_win():
                             or match.command_second_name == match_2.command_second_name):
                         match_2.win_number += 1
 
-    with open(f'./matches.pickle', 'wb') as handle:
+    with open(matches_pickle, 'wb') as handle:
         pickle.dump(matches, handle, protocol=pickle.HIGHEST_PROTOCOL)
