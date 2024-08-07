@@ -29,8 +29,8 @@ def parsing_html(html) -> Match:
     )
     # print(table_title.prettify())
     try:
-        command_first_name = table_title.find_all('td', {'class': "name"})[0].find('span').text
-        command_second_name = table_title.find_all('td', {'class': "name"})[1].find('span').text
+        command_first_name = table_title.find_all('td', {'class': "name"})[0].findAll('span')[0].text
+        command_second_name = table_title.find_all('td', {'class': "name"})[0].findAll('span')[1].text
     except IndexError:
         command_first_name = table_title.find_all('td', {'class': "today-name"})[0].find('span').text
         command_second_name = table_title.find_all('td', {'class': "today-name"})[1].find('span').text
