@@ -54,7 +54,8 @@ class Match:
             self.command_first_name,
             self.value_2_col,
             f'win_{self.win_number}',
-            self.date]
+            self.date,
+            self.date_short]
         )
 
         match_list.append([
@@ -63,7 +64,7 @@ class Match:
             self.command_second_name,
             self.match_total_first_team_1p5_value,
             'ИТБ',
-            self.date]
+            self.date, self.date_short]
         )
 
         match_list.append([
@@ -72,7 +73,8 @@ class Match:
             self.command_first_name,
             self.match_total_second_team_1p5_value,
             'ИТБ',
-            self.date]
+            self.date,
+            self.date_short]
         )
         goal_teams = list(self.goals_dict.keys())
         goal = []
@@ -87,7 +89,8 @@ class Match:
                 reverse_goal_teams[i],
                 goal[i],
                 'клиншит',
-                self.date]
+                self.date,
+                self.date_short]
             )
 
         return match_list

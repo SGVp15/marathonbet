@@ -9,6 +9,10 @@ from config import dir_html, matches_pickle
 from match import Match
 
 
+def clean_str_dot(s):
+    return s.strip().replace('.', ',')
+
+
 def parsing_html(html) -> Match:
     soup = BeautifulSoup(html, 'lxml')
     # print(soup.prettify())
@@ -56,11 +60,11 @@ def parsing_html(html) -> Match:
         'td', {"class": "price height-column-with-price first-in-main-row coupone-width-1"}
     )
 
-    value_1_col = str(value_1_col_tag.find('span').text).strip().replace('.', ',')
+    value_1_col = clean_str_dot(str(value_1_col_tag.find('span').text))
     # print(f"{value_1_col = }")
 
     value_2_col_tag = value_1_col_tag.find_next_siblings()[1]
-    value_2_col = str(value_2_col_tag.find('span').text).strip().replace('.', ',')
+    value_2_col = clean_str_dot(str(value_2_col_tag.find('span').text))
     # print(f"{value_2_col = }")
     # (1.5)
     # MATCH_TOTAL_FIRST_TEAM_
