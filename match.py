@@ -64,7 +64,8 @@ class Match:
             self.command_second_name,
             self.match_total_first_team_1p5_value,
             'ИТБ',
-            self.date, self.date_short]
+            self.date,
+            self.date_short]
         )
 
         match_list.append([
