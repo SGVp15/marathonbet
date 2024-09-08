@@ -10,6 +10,7 @@ from selenium_stealth import stealth
 
 from config import dir_html
 from links import links
+from utils.strings import clean_str
 
 
 class WebDriver():

@@ -17,55 +17,55 @@ def parsing_html(html) -> Match:
     soup = BeautifulSoup(html, 'lxml')
     # print(soup.prettify())
 
-    # Ищем div с текстом "Все выборы" и забираем "RootBlock"
+    # Ищем div с текстом 'Все выборы' и забираем 'RootBlock'
     root_block = (
         soup.find('div', string=re.compile(r'Все выборы.*'))
-        .find_parent('div', {'data-mutable-id': "RootBlock"})
+        .find_parent('div', {'data-mutable-id': 'RootBlock'})
     )
 
     # print(root_block)
     # 1 и 2 в шапке
-    # //td[@class="price height-column-with-price first-in-main-row coupone-width-1"]/span
-    # //td[@class="price height-column-with-price first-in-main-row coupone-width-1"]/../td[@class="price height-column-with-price coupone-width-1"][2]/span
+    # //td[@class='price height-column-with-price first-in-main-row coupone-width-1']/span
+    # //td[@class='price height-column-with-price first-in-main-row coupone-width-1']/../td[@class='price height-column-with-price coupone-width-1'][2]/span
     table_title = (
-        root_block.find_parent('div', {'class': "bg coupon-row"})
-        .find('table', {'class': "coupon-row-item"})
+        root_block.find_parent('div', {'class': 'bg coupon-row'})
+        .find('table', {'class': 'coupon-row-item'})
     )
     # if table_title:
     # print(f'{table_title} OK')
     # print(table_title.prettify())
     try:
-        block_name_area = table_title.find_all(name='td', attrs={'class': "first member-area"})[0]
+        block_name_area = table_title.find_all(name='td', attrs={'class': 'first member-area'})[0]
         command_first_name = block_name_area.find_all('span')[0].text
         print(command_first_name)
         date_short = (block_name_area.find_all_next(
-            name='div', attrs={'class': "date date-short"})[0].
-                      find_next('div', attrs={'class': "date-wrapper"}).text)
+            name='div', attrs={'class': 'date date-short'})[0].
+                      find_next('div', attrs={'class': 'date-wrapper'}).text)
         command_second_name = block_name_area.find_all('span')[1].text
         print(command_second_name)
     except IndexError:
         try:
-            block_name_area = table_title.find_all(name='td', attrs={'class': "today-name"})
+            block_name_area = table_title.find_all(name='td', attrs={'class': 'today-name'})
             command_first_name = block_name_area[0].find('span').text
             command_second_name = block_name_area[1].find('span').text
             date_short = (block_name_area.find_all_next(
-                name='div', attrs={'class': "date date-short"})[0].
-                          find_next('div', attrs={'class': "date-wrapper"}).text)
+                name='div', attrs={'class': 'date date-short'})[0].
+                          find_next('div', attrs={'class': 'date-wrapper'}).text)
         except IndexError:
             print('39')
             # print(f'{command_first_name = }')
             # print(f'{command_second_name = }')
 
     value_1_col_tag = table_title.find(
-        'td', {"class": "price height-column-with-price first-in-main-row coupone-width-1"}
+        'td', {'class': 'price height-column-with-price first-in-main-row coupone-width-1'}
     )
 
     value_1_col = clean_str_dot(str(value_1_col_tag.find('span').text))
-    # print(f"{value_1_col = }")
+    # print(f'{value_1_col = }')
 
     value_2_col_tag = value_1_col_tag.find_next_siblings()[1]
     value_2_col = clean_str_dot(str(value_2_col_tag.find('span').text))
-    # print(f"{value_2_col = }")
+    # print(f'{value_2_col = }')
     # (1.5)
     # MATCH_TOTAL_FIRST_TEAM_
     # MATCH_TOTAL_SECOND_TEAM_
@@ -99,10 +99,10 @@ def parsing_html(html) -> Match:
     # print(f'{match_total_second_team_value = }')
 
     # Голы (нет 2 первых)
-    # //div[@data-preference-id="GOALS_93367529"]
+    # //div[@data-preference-id='GOALS_93367529']
     goals = (
         root_block.find('div', {'data-preference-id': re.compile(r'GOALS_\d+')})
-        .find('table', {"class": "td-border"})
+        .find('table', {'class': 'td-border'})
         .find_all('td')
     )
     player_1 = goals[0].text.strip()
