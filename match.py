@@ -8,6 +8,7 @@ class Match:
                  country: str = '',
                  championship: str = '',
                  command_first_name: str = '',
+                 date_short: str = '',
                  command_second_name: str = '',
                  value_1_col: str = '',
                  value_2_col: str = '',
@@ -19,6 +20,7 @@ class Match:
         self.country: str = country
         self.championship: str = championship
         self.command_first_name: str = command_first_name
+        self.date_short: str = date_short
         self.command_second_name: str = command_second_name
         self.value_1_col: str = value_1_col
         self.value_2_col: str = value_2_col
@@ -42,7 +44,8 @@ class Match:
             self.command_second_name,
             self.value_1_col,
             f'win_{self.win_number}',
-            self.date]
+            self.date,
+            self.date_short],
         )
 
         match_list.append([
