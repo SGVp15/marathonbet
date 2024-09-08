@@ -34,15 +34,19 @@ def parsing_html(html) -> Match:
         block_name_area = table_title.find_all(name='td', attrs={'class': "first member-area"})[0]
         command_first_name = block_name_area.find_all('span')[0].text
         print(command_first_name)
-        date_short = block_name_area.find_all_next(name='div', attrs={'class': "date date-short"})[0].find_next('div',
-                                                                                                                attrs={
-                                                                                                                    'class': "date-wrapper"}).text
+        date_short = (block_name_area.find_all_next(
+            name='div', attrs={'class': "date date-short"})[0].
+                      find_next('div', attrs={'class': "date-wrapper"}).text)
         command_second_name = block_name_area.find_all('span')[1].text
         print(command_second_name)
     except IndexError:
         try:
-            command_first_name = table_title.find_all(name='td', attrs={'class': "today-name"})[0].find('span').text
-            command_second_name = table_title.find_all(name='td', attrs={'class': "today-name"})[1].find('span').text
+            block_name_area = table_title.find_all(name='td', attrs={'class': "today-name"})
+            command_first_name = block_name_area[0].find('span').text
+            command_second_name = block_name_area[1].find('span').text
+            date_short = (block_name_area.find_all_next(
+                name='div', attrs={'class': "date date-short"})[0].
+                          find_next('div', attrs={'class': "date-wrapper"}).text)
         except IndexError:
             print('39')
             # print(f'{command_first_name = }')
