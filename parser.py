@@ -27,15 +27,22 @@ def parsing_html(html) -> Match:
         root_block.find_parent('div', {'class': "bg coupon-row"})
         .find('table', {'class': "coupon-row-item"})
     )
+    # if table_title:
+    # print(f'{table_title} OK')
     # print(table_title.prettify())
     try:
-        command_first_name = table_title.find_all('td', {'class': "name"})[0].findAll('span')[0].text
-        command_second_name = table_title.find_all('td', {'class': "name"})[0].findAll('span')[1].text
+        command_first_name = table_title.find_all('td', {'class': "first member-area"})[0].find_all('span')[0].text
+        print(command_first_name)
+        command_second_name = table_title.find_all('td', {'class': "first member-area"})[0].find_all('span')[1].text
+        print(command_second_name)
     except IndexError:
-        command_first_name = table_title.find_all('td', {'class': "today-name"})[0].find('span').text
-        command_second_name = table_title.find_all('td', {'class': "today-name"})[1].find('span').text
-    # print(f'{command_first_name = }')
-    # print(f'{command_second_name = }')
+        try:
+            command_first_name = table_title.find_all('td', {'class': "today-name"})[0].find('span').text
+            command_second_name = table_title.find_all('td', {'class': "today-name"})[1].find('span').text
+        except IndexError:
+            print('39')
+            # print(f'{command_first_name = }')
+            # print(f'{command_second_name = }')
 
     value_1_col_tag = table_title.find(
         'td', {"class": "price height-column-with-price first-in-main-row coupone-width-1"}
@@ -131,8 +138,8 @@ def parsing_all() -> [Match]:
 
                         matches.append(match)
                         print(f'[OK]\t{path}')
-                    except Exception as e:
-                        print(f'[ERROR]\t{path}')
+                    except TypeError as e:
+                        print(f'[ERROR]\t{e}\n{path}')
 
     with open(matches_pickle, 'wb') as handle:
         pickle.dump(matches, handle, protocol=pickle.HIGHEST_PROTOCOL)
